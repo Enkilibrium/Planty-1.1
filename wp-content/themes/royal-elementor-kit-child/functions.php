@@ -22,3 +22,15 @@ endif;
 add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
 
 // END ENQUEUE PARENT ACTION
+
+// 👉 AJOUT DU LIEN "Admin" POUR LES UTILISATEURS CONNECTÉS
+function ajouter_lien_admin_menu($items, $args) {
+    if ( is_user_logged_in() && $args->theme_location == 'main' ) {
+        $admin_link = '<li><a href="' . admin_url() . '">Admin</a></li>';
+        $items .= $admin_link;
+    }
+    return $items;
+}
+add_filter('wp_nav_menu_items', 'ajouter_lien_admin_menu', 10, 2);
+
+
